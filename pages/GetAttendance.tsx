@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'; 
 
@@ -45,12 +46,14 @@ function GetAttendance() {
   return (
     <div className="flex flex-col">
             <div className="flex space-x-3 px-5 py-4 bg-black">
+            <Link href="/">
                 <img
                     className="h-8 w-auto"
                     src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"
                     alt="Workflow"
                 />
                 <p className="font-semibold text-white text-xl ">JEC-AMS</p>
+                </Link>
             </div>
             <div className='flex justify-end pt-3 space-x-2 px-3'>
             <label className='text-lg' htmlFor="dateSelect">Select Date: </label>
