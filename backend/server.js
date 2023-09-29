@@ -56,7 +56,7 @@ const AttendanceSchema = new mongoose.Schema({
   facultyId: String,
 });
 const FacultySchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, unique: true },
   department: String,
   password: String, // hashed password
   role: String, // "faculty" or "head"
@@ -108,12 +108,20 @@ app.post("/login", async (req, res) => {
   }
 });
 
+function isAuthorizedToRegisterAsHead(name, department, secretCode) {
+  const HOD_SECRET_CODE = "fosslab"; // You can change this to any code you prefer.
+  return secretCode === HOD_SECRET_CODE;
+}
+
 app.post("/register", async (req, res) => {
   try {
-    const { name, department, password, role } = req.body;
+    const { name, department, password, role, secretCode } = req.body;
 
     // Ensure that only certain authorized users can register as 'head'
-    if (role === "head" && !isAuthorizedToRegisterAsHead(name, department)) {
+    if (
+      role === "head" &&
+      !isAuthorizedToRegisterAsHead(name, department, secretCode)
+    ) {
       return res
         .status(403)
         .send({ error: "You are not authorized to register as HoD" });
