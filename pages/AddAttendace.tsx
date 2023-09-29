@@ -30,7 +30,7 @@ function AddAttendace() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/attendance", {
+    const response = await fetch("https://ams-back.vercel.app/attendance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

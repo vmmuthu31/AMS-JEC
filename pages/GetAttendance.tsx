@@ -9,7 +9,7 @@ function GetAttendance() {
       const token = useSelector(state => state.auth.token); 
       useEffect(() => {
         // Fetch data on component mount
-        fetch("http://localhost:5000/attendance?date=" + selectedDate, {
+        fetch("https://ams-back.vercel.app//attendance?date=" + selectedDate, {
             headers: {
                 'Authorization': token 
             }

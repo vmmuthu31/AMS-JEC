@@ -10,6 +10,13 @@ const SECRET_KEY = "yourSecretKeyHere";
 // Middlewares
 app.use(bodyParser.json());
 app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // replace with your frontend domain
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true, // Allow cookies to be sent with the request (if using sessions/cookies)
+};
+
+app.use(cors(corsOptions));
 
 function authenticate(req, res, next) {
   const token = req.headers["authorization"];
