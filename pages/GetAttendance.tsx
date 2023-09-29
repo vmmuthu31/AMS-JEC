@@ -9,7 +9,7 @@ function GetAttendance() {
       const token = useSelector(state => state.auth.token); 
       useEffect(() => {
         // Fetch data on component mount
-        fetch("https://ams-back.vercel.app//attendance?date=" + selectedDate, {
+        fetch("https://ams-back.vercel.app/api/attendance?date=" + selectedDate, {
             headers: {
                 'Authorization': token 
             }
@@ -52,7 +52,7 @@ function GetAttendance() {
                 />
                 <p className="font-semibold text-white text-xl ">JEC-AMS</p>
             </div>
-            <div className='flex justify-end pt-3 space-x-2'>
+            <div className='flex justify-end pt-3 space-x-2 px-3'>
             <label className='text-lg' htmlFor="dateSelect">Select Date: </label>
             <input 
     type="date" 

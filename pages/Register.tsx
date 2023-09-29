@@ -22,7 +22,7 @@ function Register() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("https://ams-back.vercel.app/register", {
+    const response = await fetch("https://ams-back.vercel.app/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

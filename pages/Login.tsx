@@ -23,7 +23,7 @@ function Login() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("https://ams-back.vercel.app/login", {
+    const response = await fetch("https://ams-back.vercel.app/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
