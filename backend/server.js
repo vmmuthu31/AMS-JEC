@@ -49,6 +49,7 @@ mongoose
 // Define the Attendance model
 const AttendanceSchema = new mongoose.Schema({
   date: Date,
+  year: String,
   class: String,
   total: Number,
   present: Number,
@@ -56,7 +57,7 @@ const AttendanceSchema = new mongoose.Schema({
   facultyId: String,
 });
 const FacultySchema = new mongoose.Schema({
-  name: { type: String, unique: true },
+  email: { type: String, unique: true },
   department: String,
   password: String, // hashed password
   role: String, // "faculty" or "head"
@@ -85,8 +86,8 @@ app.post("/attendance", authenticate, async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const { name, password } = req.body;
-    const faculty = await Faculty.findOne({ name });
+    const { email, password } = req.body;
+    const faculty = await Faculty.findOne({ email });
 
     if (!faculty) {
       return res.status(400).send({ error: "Invalid credentials" });
@@ -108,19 +109,19 @@ app.post("/login", async (req, res) => {
   }
 });
 
-function isAuthorizedToRegisterAsHead(name, department, secretCode) {
+function isAuthorizedToRegisterAsHead(email, department, secretCode) {
   const HOD_SECRET_CODE = "fosslab"; // You can change this to any code you prefer.
   return secretCode === HOD_SECRET_CODE;
 }
 
 app.post("/register", async (req, res) => {
   try {
-    const { name, department, password, role, secretCode } = req.body;
+    const { email, department, password, role, secretCode } = req.body;
 
     // Ensure that only certain authorized users can register as 'head'
     if (
       role === "head" &&
-      !isAuthorizedToRegisterAsHead(name, department, secretCode)
+      !isAuthorizedToRegisterAsHead(email, department, secretCode)
     ) {
       return res
         .status(403)
@@ -129,7 +130,7 @@ app.post("/register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const faculty = new Faculty({
-      name,
+      email,
       department,
       password: hashedPassword,
       role,
