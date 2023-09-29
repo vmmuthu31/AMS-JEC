@@ -15,6 +15,12 @@ const corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true, // Allow cookies to be sent with the request (if using sessions/cookies)
 };
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*"); // replace '*' with your frontend domain in production
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
 
 app.use(cors(corsOptions));
 
