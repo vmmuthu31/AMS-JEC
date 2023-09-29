@@ -31,8 +31,8 @@ function Register() {
     });
 
     if (response.ok) {
-      toast.success("Signup Successfull Please Login!")
-    
+      toast.success("Signup Successfull!")
+      router.push("/Login")
     
     } else {
       console.error("Sign-in failed");

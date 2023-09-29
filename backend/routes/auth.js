@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: faculty._id, role: faculty.role },
       SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "7d" }
     );
     res.send({ token, role: faculty.role });
   } catch (error) {

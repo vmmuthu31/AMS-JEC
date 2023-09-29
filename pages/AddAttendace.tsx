@@ -10,15 +10,17 @@ function AddAttendace() {
     const currentDate = new Date().toISOString().split('T')[0];
     const token = useSelector(state => state.auth.token); 
     console.log(token)
-  const [formData, setFormData] = useState({
-    "date": currentDate,
-    "class": "",
-    "total": "",
-    "present": "",
-    "year": "1",
-    "absentees":"",
-    "absent":"",
-  });
+    const initialFormData = {
+      "date": currentDate,
+      "class": "",
+      "total": "",
+      "present": "",
+      "year": "1",
+      "absentees": "",
+      "absent": "",
+  };
+    const [formData, setFormData] = useState(initialFormData);
+
   const absent= formData.total - formData.present;
   formData.absent = absent.toString();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +30,7 @@ function AddAttendace() {
       [name]: value,
     });
   };
+ 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await fetch("https://ams-back.vercel.app/api/attendance", {
@@ -41,10 +44,9 @@ function AddAttendace() {
 
     if (response.ok) {
       toast.success("Uploaded the attendance!")
-    
-    
+      setFormData(initialFormData);
     } else {
-      console.error("Sign-in failed");
+      console.error(" failed");
       toast.error("Submit all details!")
     }
   };
