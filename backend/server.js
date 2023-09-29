@@ -68,7 +68,14 @@ const Faculty = mongoose.model("Faculty", FacultySchema);
 app.post("/attendance", authenticate, async (req, res) => {
   try {
     const attendanceData = req.body;
-    const attendance = new Attendance(attendanceData);
+
+    // You can access the facultyId here
+    const facultyIdFromToken = req.userId;
+
+    const attendance = new Attendance({
+      ...attendanceData,
+      facultyId: facultyIdFromToken, // Assuming you want to save this to the DB
+    });
     await attendance.save();
     res.status(201).send({ message: "Attendance added successfully" });
   } catch (error) {
