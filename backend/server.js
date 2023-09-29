@@ -54,6 +54,7 @@ const AttendanceSchema = new mongoose.Schema({
   total: Number,
   present: Number,
   absent: Number,
+  absentees: String,
   facultyId: String,
 });
 const FacultySchema = new mongoose.Schema({

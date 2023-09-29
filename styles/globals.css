@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+h1, h3 {
+    text-align: center;
+ }
+ table {
+    width: 10px;
+    table-layout: fixed;
+    border-collapse: collapse;
+ }
+       
+ th, td {
+    padding: 5px;
+    text-align: left;
+    border: 1px solid;
+ }
+       
+ td {
+    width: 15px;
+ }
