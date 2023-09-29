@@ -152,7 +152,11 @@ app.get("/attendance", authenticate, ensureHoD, async (req, res) => {
     res.status(500).send({ error: "Failed to fetch attendance records" });
   }
 });
-
+app.get("/", (req, res) => {
+  res.json({
+    message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
+  });
+});
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
