@@ -21,21 +21,6 @@ function authenticate(req, res, next) {
   });
 }
 
-function ensureHoD(req, res, next) {
-  if (req.userRole !== "head")
-    return res
-      .status(403)
-      .send({ error: "Access forbidden: Only HoD can access this." });
-  next();
-}
-
-// Utility Functions
-
-function isAuthorizedToRegisterAsHead(email, department, secretCode) {
-  const HOD_SECRET_CODE = "fosslab";
-  return secretCode === HOD_SECRET_CODE;
-}
-
 // API Endpoints
 router.post("/attendance", authenticate, async (req, res) => {
   try {
@@ -92,17 +77,7 @@ function isAuthorizedToRegisterAsHead(email, department, secretCode) {
 
 router.post("/register", async (req, res) => {
   try {
-    const { email, department, password, role, secretCode } = req.body;
-
-    // Ensure that only certain authorized users can register as 'head'
-    if (
-      role === "head" &&
-      !isAuthorizedToRegisterAsHead(email, department, secretCode)
-    ) {
-      return res
-        .status(403)
-        .send({ error: "You are not authorized to register as HoD" });
-    }
+    const { email, department, password, role } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const faculty = new Faculty({
@@ -118,7 +93,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/attendance", authenticate, ensureHoD, async (req, res) => {
+router.get("/attendance", authenticate, async (req, res) => {
   try {
     const date = req.query.date;
     const attendanceRecords = await Attendance.find({ date: new Date(date) });
