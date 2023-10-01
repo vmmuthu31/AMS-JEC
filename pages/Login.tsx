@@ -47,10 +47,11 @@ function Login() {
     }
   };
   return (
-    <div className="bg-[#009FF8] min-h-screen">
+    <div className="bg-white min-h-screen">
+      <div className="bg-[#009FF8]">
        <div className="flex justify-center px-5 py-4 bg-[#009FF8] space-x-4">
-      <Link href="/" className="flex   space-x-4">
-      <img
+        <Link href="/" className="flex bg-[#009FF8]  space-x-4">
+        <img
             className=" h-8 w-auto"
             src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"
             alt="Workflow"
@@ -58,15 +59,15 @@ function Login() {
         <p className="font-semibold text-white text-xl"> JEC-AMS</p>
         </Link>
       </div>
-      <div className="sm:mx-auto mx-5 mt-1 flex justify-between sm:w-full sm:max-w-md">
+      <div className="sm:mx-auto  mx-5 mt-1 flex justify-between sm:w-full sm:max-w-md">
         <Link href="/">
       <AiFillCaretLeft className="text-2xl text-white" />
       </Link>
           <h2 className="mb-8  text-center text-xl font-serif font-semibold text-white">Login here!</h2>
          <p></p>
         </div>
-
-        <div className="min-h-full bg-white pb-36 example2 flex flex-col justify-center py-10 sm:px-6 lg:px-8">
+        </div>
+        <div className="min-h-full bg-white  example2 flex flex-col justify-center py-10 sm:px-6 lg:px-8">
         
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className=" mx-8 rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">

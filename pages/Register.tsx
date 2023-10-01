@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {AiFillCaretLeft} from "react-icons/ai"
 
 function Register() {
     const router = useRouter();
@@ -40,10 +41,11 @@ function Register() {
     }
   };
   return (
-    <div>
-       <div className="flex px-5 py-4 bg-black space-x-4">
-      <Link href="/" className="flex  bg-black space-x-4">
-      <img
+    <div className="bg-white min-h-screen">
+      <div className="bg-[#009FF8]">
+       <div className="flex justify-center px-5 py-4 bg-[#009FF8] space-x-4">
+        <Link href="/" className="flex bg-[#009FF8]  space-x-4">
+        <img
             className=" h-8 w-auto"
             src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"
             alt="Workflow"
@@ -51,15 +53,16 @@ function Register() {
         <p className="font-semibold text-white text-xl"> JEC-AMS</p>
         </Link>
       </div>
-        <div className="min-h-full flex flex-col justify-center pb-5 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          
-          <h2 className="mt-2 text-center text-2xl font-serif font-bold text-gray-900">Sign up here!</h2>
-         
+      <div className="sm:mx-auto  mx-5 mt-1 flex justify-between sm:w-full sm:max-w-md">
+        <Link href="/">
+      <AiFillCaretLeft className="text-2xl text-white" />
+      </Link>
+          <h2 className="mb-8  text-center text-xl font-serif font-semibold text-white">Signup here!</h2>
+         <p></p>
         </div>
-
-        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-gray-400 mx-8 rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        </div>
+        <div className="min-h-full bg-white  example2 flex flex-col justify-center py-5 sm:px-6 lg:px-8">
+            <div className=" mx-8 rounded-md pt-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-black">
@@ -170,7 +173,8 @@ function Register() {
             
           </div>
         </div>
-      </div>
+           
+
     </div>
   )
 }
