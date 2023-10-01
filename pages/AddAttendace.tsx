@@ -9,12 +9,13 @@ function AddAttendace() {
     const router = useRouter();
     const currentDate = new Date().toISOString().split('T')[0];
     const token = useSelector(state => state.auth.token); 
+    const department = useSelector(state => state.auth.department); 
     console.log(token)
     const initialFormData = {
       "date": currentDate,
       "class": "",
       "total": "",
-      "department": "",
+      "department":department,
       "present": "",
       "year": "1",
       "absentees": "",

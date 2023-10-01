@@ -74,7 +74,12 @@ router.post("/login", async (req, res) => {
       SECRET_KEY,
       { expiresIn: "7d" }
     );
-    res.send({ token, role: faculty.role });
+    res.send({
+      token,
+      role: faculty.role,
+      email: faculty.email,
+      department: faculty.department,
+    });
   } catch (error) {
     res.status(500).send({ error: "Login failed" });
   }

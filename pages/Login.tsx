@@ -34,7 +34,7 @@ function Login() {
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(login({ token: data.token, role: data.role }));
+        dispatch(login({ token: data.token, role: data.role, email:data.email, department:data.department }));
         toast.success("Login Successful!");
         if (data.role === 'head') {
             router.push('/GetAttendance');
