@@ -47,6 +47,7 @@ function AddAttendace() {
     if (response.ok) {
       toast.success("Uploaded the attendance!")
       setFormData(initialFormData);
+      router.push("/Dashboard")
     } else {
       console.error(" failed");
       toast.error("Submit all details!")
@@ -54,8 +55,8 @@ function AddAttendace() {
   };
   return (
     <div>
-      <div className="flex px-5 py-4 bg-black space-x-4">
-      <Link href="/" className="flex  bg-black space-x-4">
+      <div className="flex px-5 py-4 bg-[#009FF8] space-x-4">
+      <Link href="/" className="flex mx-auto bg-[#009FF8] space-x-4">
       <img
             className=" h-8 w-auto"
             src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"
@@ -66,7 +67,7 @@ function AddAttendace() {
       </div>
         <div className="min-h-full flex flex-col justify-center pb-5 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md"> 
-          <h2 className="mt-4 text-center text-2xl font-serif font-bold text-gray-900">Today&apos;s Attendance</h2>
+          <h2 className="mt-4 text-center text-xl font-serif  text-blue-400">Please select the Year and update your department  attendance for today.</h2>
         </div>
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-gray-400 mx-8 rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -113,7 +114,7 @@ function AddAttendace() {
 
             <div>
               <label htmlFor="class" className="block text-sm font-medium text-black">
-              Total Count
+              Total Students *
               </label>
               <div className="mt-1">
                 <input
@@ -130,7 +131,7 @@ function AddAttendace() {
             </div>
             <div>
               <label htmlFor="present" className="block text-sm font-medium text-black">
-              Present Count
+              Students Present  *
               </label>
               <div className="mt-1">
                 <input
@@ -147,7 +148,7 @@ function AddAttendace() {
             </div>
             <div>
               <label htmlFor="absentees" className="block text-sm font-medium text-black">
-              Absentees
+              Absentees Number *
               </label>
               <div className="mt-1">
                 <input
@@ -156,7 +157,7 @@ function AddAttendace() {
                   type="text"
                   autoComplete="absentees"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none h-20 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   value={formData.absentees}
                   onChange={handleInputChange}
                 />

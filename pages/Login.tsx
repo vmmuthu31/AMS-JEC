@@ -36,11 +36,9 @@ function Login() {
         const data = await response.json();
         dispatch(login({ token: data.token, role: data.role, email:data.email, department:data.department }));
         toast.success("Login Successful!");
-        if (data.role === 'head') {
-            router.push('/GetAttendance');
-          } else {
-            router.push('/AddAttendace');
-          }
+      
+            router.push('/Dashboard');
+      
     } else {
       console.error("Login failed");
       toast.error("Login Failed!")
