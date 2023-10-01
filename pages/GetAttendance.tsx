@@ -43,6 +43,17 @@ function GetAttendance() {
       acc[record.department][record.year].push(record);
       return acc;
   }, {});
+  const aggregateDataByDepartment = Object.entries(groupedAttendanceByDepartment).reduce((acc, [department, yearRecords]) => {
+    acc[department] = { total: 0, present: 0, absent: 0 };
+    Object.values(yearRecords).forEach(records => {
+      records.forEach(record => {
+        acc[department].total += record.total;
+        acc[department].present += record.present;
+        acc[department].absent += record.absent;
+      });
+    });
+    return acc;
+  }, {});
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
@@ -77,6 +88,7 @@ function GetAttendance() {
                 {Object.entries(groupedAttendanceByDepartment).map(([department, yearRecords]) => (
 
 <div key={department} className="">
+
 <h3 className="text-lg font-serif font-bold mb-4">{`Department: ${department}`}</h3>
 {Object.entries(yearRecords).map(([year, records]) => (
   <div key={year} className="my-6">
@@ -115,14 +127,30 @@ function GetAttendance() {
     </div>
 ))}
 
+
               </div>
           
            
             ))}
+            <div className=" mb-3  text-center ">
+              <p className="px-1 py-1 font-bold text-left text-sm text-gray-800">Total Number of Students in Department: {aggregateDataByDepartment[department].total}</p>
+              <p className="px-1 py-1 font-bold text-left text-sm text-gray-800">Total Present: {aggregateDataByDepartment[department].present}</p>
+              <p className="px-1 py-1 font-bold text-left text-sm text-gray-800">Total Absent: {aggregateDataByDepartment[department].absent}</p>
+              <p className={`px-1 py-1 whitespace-nowrap text-sm font-bold text-left ${
+                (aggregateDataByDepartment[department].present / aggregateDataByDepartment[department].total) * 100 < 50
+                  ? 'text-red-800'
+                  : (aggregateDataByDepartment[department].present / aggregateDataByDepartment[department].total) * 100 < 75
+                    ? 'text-orange-800'
+                    : 'text-green-800'
+              }`}>
+          Department Percentage      {((aggregateDataByDepartment[department].present / aggregateDataByDepartment[department].total) * 100).toFixed(2)}%
+              </p>
+            </div>
           </div>
         ))}
 
-    </div>    
+    </div>   
+     
     </div>
     </div>
   )
