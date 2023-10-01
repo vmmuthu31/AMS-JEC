@@ -70,7 +70,7 @@ function AddAttendace() {
           <h2 className="mt-4 text-center text-xl font-serif  text-blue-400">Please select the Year and update your department  attendance for today.</h2>
         </div>
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-gray-400 mx-8 rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className=" mx-8 rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
     <label htmlFor="year" className="block text-sm font-medium text-black">
