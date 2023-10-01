@@ -58,6 +58,8 @@ function GetAttendance() {
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
 };
+const currentDate = new Date().toISOString().split('T')[0];
+
 
   return (
     <div className="flex flex-col">
@@ -79,10 +81,13 @@ function GetAttendance() {
     id="dateSelect" 
     value={selectedDate} 
     onChange={handleDateChange}
+    max={currentDate} 
 />
 
             </div>
+           
             <div className="p-4">
+            {attendance.length === 0  ? <div className="text-center font-bold text-xl text-red-600 mt-5">No data available</div> : (
             <div  className="">
                
                 {Object.entries(groupedAttendanceByDepartment).map(([department, yearRecords]) => (
@@ -150,7 +155,7 @@ function GetAttendance() {
         ))}
 
     </div>   
-     
+            )}
     </div>
     </div>
   )
