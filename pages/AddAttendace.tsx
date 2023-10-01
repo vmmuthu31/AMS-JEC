@@ -14,6 +14,7 @@ function AddAttendace() {
       "date": currentDate,
       "class": "",
       "total": "",
+      "department": "",
       "present": "",
       "year": "1",
       "absentees": "",

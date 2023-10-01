@@ -21,3 +21,9 @@ h1, h3 {
  td {
     width: 15px;
  }
+
+
+ .example2 {
+   border: 0px solid red;
+   border-radius: 120px 0px 0px 0px;
+ }
