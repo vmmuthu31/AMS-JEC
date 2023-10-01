@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## To Download the mobile app:
+![image](https://github.com/vmmuthu31/Attendnce-Management-System-Jaya/assets/88650559/1230a42d-d363-47ca-a85c-e0871913e859)
+
+
 ## Getting Started
 
 First, run the development server:
