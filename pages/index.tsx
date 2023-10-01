@@ -46,7 +46,7 @@ export default function Home() {
               JEC - AMS
             </h1>
             <div className='bg-[#009FF8] example2 mt-10 px-10 p-12  '>
-            <p className="mt-1 pt-3  text-md text-gray-300">
+            <p className="mt-1 pt-3  text-lg text-gray-300">
             A seamless platform for faculties to record and manage student attendance. With JEC-AMS, tracking daily attendance and generating reports becomes effortless. Whether you're a faculty member uploading daily records or a department head overseeing attendance metrics, our system is designed to provide a streamlined experience, ensuring accuracy and efficiency.
 
 
