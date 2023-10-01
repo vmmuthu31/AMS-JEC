@@ -10,7 +10,7 @@ function Register() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    department: "",
+    department: "B.E AERONAUTICAL ENGINEERING",
     role: "faculty",
     
   });
@@ -85,17 +85,28 @@ function Register() {
               <label htmlFor="department" className="block text-sm font-medium text-black">
                 Department
               </label>
+              
               <div className="mt-1">
-                <input
-                  id="department"
-                  name="department"
-                  type="text"
-                  autoComplete="department"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  value={formData.department}
-                  onChange={handleInputChange}
-                />
+              <select
+    id="department"
+    name="department"
+    autoComplete="department"
+    required
+    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    value={formData.department}
+    onChange={handleInputChange}
+>
+    <option value="" disabled>Select Department</option> {/* Add this line */}
+    <option value="B.E AERONAUTICAL ENGINEERING">B.E AERONAUTICAL ENGINEERING</option>
+    <option value="B.E CIVIL ENGINEERING">B.E CIVIL ENGINEERING</option>
+    <option value="B.E COMPUTER SCIENCE ENGINEERING">B.E COMPUTER SCIENCE ENGINEERING</option>
+    <option value="B.E COMPUTER SCIENCE WITH BUSINESS SYSTEMS">B.E COMPUTER SCIENCE WITH BUSINESS SYSTEMS</option>
+    <option value="B.E ELECTRONICS & COMMUNICATION ENGG.">B.E ELECTRONICS & COMMUNICATION ENGG.</option>
+    <option value="B.E ELECTRICAL & ELECTRONICS ENGG.">B.E ELECTRICAL & ELECTRONICS ENGG.</option>
+    <option value="B.E ELECTRONICS & INSTRUMENTATION ENGG.">B.E ELECTRONICS & INSTRUMENTATION ENGG.</option>
+    <option value="B.E MECHANICAL ENGINEERING">B.E MECHANICAL ENGINEERING</option>
+    <option value="B.TECH TEXTILE DEPARTMENT">B.TECH TEXTILE DEPARTMENT</option>
+</select>
               </div>
             </div>
             <div>
