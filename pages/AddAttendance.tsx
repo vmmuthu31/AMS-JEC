@@ -56,7 +56,7 @@ function AddAttendace() {
   return (
     <div>
       <div className="flex px-5 py-4 bg-[#009FF8] space-x-4">
-      <Link href="/" className="flex mx-auto bg-[#009FF8] space-x-4">
+      <Link href="/Dashboard" className="flex mx-auto bg-[#009FF8] space-x-4">
       <img
             className=" h-8 w-auto"
             src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"

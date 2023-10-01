@@ -33,20 +33,25 @@ function GetAttendance() {
         });
     }, [selectedDate]); // Refetch when selectedDate changes
     
-    const groupedAttendance = attendance.reduce((acc, record) => {
-        if (!acc[record.year]) {
-            acc[record.year] = [];
-        }
-        acc[record.year].push(record);
-        return acc;
-    }, {});
-      const handleDateChange = (e) => {
-          setSelectedDate(e.target.value);
-      };
+    const groupedAttendanceByDepartment = attendance.reduce((acc, record) => {
+      if (!acc[record.department]) {
+          acc[record.department] = {};
+      }
+      if (!acc[record.department][record.year]) {
+          acc[record.department][record.year] = [];
+      }
+      acc[record.department][record.year].push(record);
+      return acc;
+  }, {});
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+};
+
   return (
     <div className="flex flex-col">
            <div className="flex px-5 py-4 bg-[#009FF8] space-x-4">
-      <Link href="/" className="flex mx-auto  bg-[#009FF8] space-x-4">
+      <Link href="/Dashboard" className="flex mx-auto  bg-[#009FF8] space-x-4">
                 <img
                     className="h-8 w-auto"
                     src="https://blogger.googleusercontent.com/img/a/AVvXsEjmL38K-8tCjcNKGjvAGHeVHkyN8t1lo68bXI2oqe2WVp8RVuF9ombU-79T9guiG2Z4FRk18nhzTWz5-ZkPpy993uWl7D59MyfLyfz0I5d4fKH2XuKhSC0h9SqofVdxzM-lplb8s_pCCZk3sUyccrZEL3uWAkliNXGUWWX_uCg6txRFRASiN-24sUvaUT0"
@@ -55,6 +60,7 @@ function GetAttendance() {
                 <p className="font-semibold text-white text-xl ">JEC-AMS</p>
                 </Link>
             </div>
+            <h2 className="mt-4 text-center text-xl font-serif  text-blue-400">You can view the Entire Department&apos;s Attendance here.</h2>
             <div className='flex justify-end pt-3 space-x-2 px-3'>
             <label className='text-lg' htmlFor="dateSelect">Select Date: </label>
             <input 
@@ -67,69 +73,54 @@ function GetAttendance() {
             </div>
             <div className="p-4">
             <div  className="">
-                <h2 className="text-center text-2xl font-serif font-bold text-gray-900 mb-4">Today's Attendance</h2>
-                {Object.entries(groupedAttendance).map(([year, records]) => (
-                     <div key={year} className="my-6">
-                     <h3 className="text-lg font-serif font-bold mb-4">{`Year ${year} Attendance`}</h3>
+               
+                {Object.entries(groupedAttendanceByDepartment).map(([department, yearRecords]) => (
+
+<div key={department} className="">
+<h3 className="text-lg font-serif font-bold mb-4">{`Department: ${department}`}</h3>
+{Object.entries(yearRecords).map(([year, records]) => (
+  <div key={year} className="my-6">
+    <h4 className="text-md font-serif font-semibold mb-4">{`Year ${year} Attendance`}</h4>
             
-                    <table className="min-w-full px-10 divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
+                  
+          
               
-                  <th
-                    scope="col"
-                    className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Section
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Present
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Absent
-                  </th>
-                  {/* <th
-                    scope="col"
-                    className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Absentees
-                  </th> */}
-                  <th
-                    scope="col"
-                    className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Percentage
-                  </th>
-                 
-                </tr>
-              </thead>
-              <tbody className="bg-white text-center divide-y divide-gray-200">
               {records.map(record => (
-    <tr key={record._id}>
-       
-        <td className="px-1 py-4 text-center whitespace-nowrap text-sm text-gray-500">{record.class}</td>
-        <td className="px-1 py-4 text-center whitespace-nowrap text-sm text-gray-500">{record.present}</td>
-        <td className="px-1 py-4 text-center whitespace-nowrap text-sm text-gray-500">{record.absent}</td>
+    <div key={record._id}>
+       <div className=" border rounded-2xl mb-3 border-blue-400 text-center ">
+
+        <div className='flex justify-between mx-5'>
+        <p className="px-1 py-2 font-bold text-left text-sm text-gray-800">Total Number of Students-{record.total}</p>
+        <p className={`px-1 py-2 whitespace-nowrap text-sm font-bold text-center ${
+  (record.present / record.total) * 100 < 50 
+    ? 'text-red-800' 
+    : (record.present / record.total) * 100 < 75 
+      ? 'text-orange-800' 
+      : 'text-green-800'
+}`}>
+  {((record.present / record.total) * 100).toFixed(2)}%
+</p>
+
+        </div>
+        <div className='flex justify-center'>
+        <p className="px-1 py-2 font-bold text-left mx-4 text-sm text-gray-800">No. OF PRESENT-{record.present}</p>
+        <p className="px-1 py-2 font-bold text-left mx-4 text-sm text-gray-800">NO. OF ABSENT-{record.absent}</p>
+        </div>
+        <p className=" text-left font-bold whitespace-nowrap text-md mx-5 text-gray-800">Absentees Roll Numbers:-</p>
+        <p className="px-1 py-2 text-center text-sm text-red-600 font-bold underline">{record.absentees}</p>
         {/* If absentees property isn't present in the record, you might want to comment this out or handle it differently */}
         {/* <td className="px-1 py-4 whitespace-nowrap  text-center  text-sm  text-gray-500">{record.absentees}</td> */}
-        <td className={`px-1 py-4 whitespace-nowrap text-sm font-bold text-center ${(record.present / record.total) * 100 < 50 ? 'text-red-800' : 'text-green-800'}`}>
-    {((record.present / record.total) * 100).toFixed(2)}%
-</td>
-
-
-    </tr>
+        
+</div>
+    </div>
 ))}
 
-              </tbody>
-            </table>
-            </div>
+              </div>
+          
+           
             ))}
+          </div>
+        ))}
 
     </div>    
     </div>
