@@ -12,7 +12,7 @@ function Register() {
     password: "",
     department: "",
     role: "faculty",
-    secretCode:"",
+    
   });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -118,29 +118,6 @@ function Register() {
 </select>
     </div>
 </div>
-
-{/* Conditionally render secret code input based on role */}
-{formData.role === 'head' && (
-    <div className="mt-4">
-        <label htmlFor="secretCode" className="block text-sm font-medium text-black">
-            Secret Pin
-        </label>
-        <div className="mt-1">
-            <input
-                id="secretCode"
-                name="secretCode"
-                type="text"
-                autoComplete="off"
-                required
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={formData.secretCode || ''}
-                onChange={handleInputChange}
-            />
-        </div>
-    </div>
-)}
-
-
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-black">
                 Password
