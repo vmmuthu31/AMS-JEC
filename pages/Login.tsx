@@ -46,6 +46,7 @@ function Login() {
   };
   return (
     <div className="bg-white min-h-screen">
+      
       <div className="bg-[#009FF8]">
        <div className="flex justify-center px-5 py-4 bg-[#009FF8] space-x-4">
         <Link href="/" className="flex bg-[#009FF8]  space-x-4">
