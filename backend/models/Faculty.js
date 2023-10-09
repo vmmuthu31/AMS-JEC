@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
 const FacultySchema = new mongoose.Schema({
   email: { type: String, unique: true },
   department: String,
   password: String, // hashed password
-  role: String, // "faculty" or "head"
+  role: {
+    type: String,
+    enum: ["faculty", "hod", "superadmin"],
+    required: true,
+  },
 });
 
 const Faculty = mongoose.model("Faculty", FacultySchema);

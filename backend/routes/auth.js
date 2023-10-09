@@ -12,11 +12,17 @@ function authenticate(req, res, next) {
   const token = req.headers["authorization"];
   if (!token) return res.status(403).send({ error: "No token provided" });
 
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, SECRET_KEY, async (err, decoded) => {
     if (err)
       return res.status(401).send({ error: "Failed to authenticate token" });
     req.userId = decoded.id;
     req.userRole = decoded.role;
+
+    if (decoded.role === "faculty" || decoded.role === "hod") {
+      const faculty = await Faculty.findById(decoded.id);
+      req.userDepartment = faculty.department;
+    }
+
     next();
   });
 }
@@ -24,15 +30,39 @@ function authenticate(req, res, next) {
 // API Endpoints
 router.post("/attendance", authenticate, async (req, res) => {
   try {
-    const attendanceData = req.body;
+    const { year1, year2, year3, year4, class: classData } = req.body;
 
-    // You can access the facultyId here
-    const facultyIdFromToken = req.userId;
+    const attendanceData = {
+      year1: {
+        total: year1.total,
+        present: year1.present,
+        absent: year1.absent,
+        absentees: year1.absentees,
+      },
+      year2: {
+        total: year2.total,
+        present: year2.present,
+        absent: year2.absent,
+        absentees: year2.absentees,
+      },
+      year3: {
+        total: year3.total,
+        present: year3.present,
+        absent: year3.absent,
+        absentees: year3.absentees,
+      },
+      year4: {
+        total: year4.total,
+        present: year4.present,
+        absent: year4.absent,
+        absentees: year4.absentees,
+      },
+      facultyId: req.userId,
+      department: req.userDepartment,
+      class: classData,
+    };
 
-    const attendance = new Attendance({
-      ...attendanceData,
-      facultyId: facultyIdFromToken, // Assuming you want to save this to the DB
-    });
+    const attendance = new Attendance(attendanceData);
     await attendance.save();
     res.status(201).send({ message: "Attendance added successfully" });
   } catch (error) {
@@ -96,9 +126,23 @@ router.post("/register", async (req, res) => {
 router.get("/attendance", authenticate, async (req, res) => {
   try {
     const date = req.query.date;
-    const attendanceRecords = await Attendance.find({ date: new Date(date) });
-    res.status(200).send(attendanceRecords);
+    let query = { date: new Date(date) };
+
+    if (req.userRole === "faculty" || req.userRole === "hod") {
+      const faculty = await Faculty.findById(req.userId);
+      query.department = faculty.department;
+      const attendanceRecordsByDepartment = await Attendance.find({
+        department: query.department,
+      });
+      res.status(200).send(attendanceRecordsByDepartment);
+    } else {
+      const allRecords = await Attendance.find({});
+      res.status(200).send(allRecords);
+    }
+
+    console.log("Querying with:", query); // Log the query
   } catch (error) {
+    console.error("Error fetching attendance records:", error); // Log the error
     res.status(500).send({ error: "Failed to fetch attendance records" });
   }
 });
