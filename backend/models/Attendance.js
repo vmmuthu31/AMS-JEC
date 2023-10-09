@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const AttendanceSchema = new mongoose.Schema({
   date: Date,
   year: String,
+  department: String,
   class: String,
   total: Number,
   present: Number,
