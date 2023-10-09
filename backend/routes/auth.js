@@ -141,23 +141,26 @@ router.post("/register", async (req, res) => {
     res.status(500).send({ error: "Registration failed" });
   }
 });
-
 router.get("/attendance", authenticate, async (req, res) => {
   try {
-    const date = req.query.date;
-    let query = { date: new Date(date) };
+    const dateStr = req.query.date;
+    const startOfDay = new Date(new Date(dateStr).setUTCHours(0, 0, 0, 0));
+    const endOfDay = new Date(new Date(dateStr).setUTCHours(23, 59, 59, 999));
+
+    let query = {
+      date: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    };
 
     if (req.userRole === "faculty" || req.userRole === "hod") {
       const faculty = await Faculty.findById(req.userId);
       query.department = faculty.department;
-      const attendanceRecordsByDepartment = await Attendance.find({
-        department: query.department,
-      });
-      res.status(200).send(attendanceRecordsByDepartment);
-    } else {
-      const allRecords = await Attendance.find({});
-      res.status(200).send(allRecords);
     }
+
+    const attendanceRecords = await Attendance.find(query);
+    res.status(200).send(attendanceRecords);
 
     console.log("Querying with:", query); // Log the query
   } catch (error) {
