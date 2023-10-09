@@ -67,39 +67,13 @@ router.get("/view-total-students", async (req, res) => {
 // API Endpoints
 router.post("/attendance", authenticate, async (req, res) => {
   try {
-    const { year1, year2, year3, year4, class: classData } = req.body;
-
-    const attendanceData = {
-      year1: {
-        total: year1.total,
-        present: year1.present,
-        absent: year1.absent,
-        absentees: year1.absentees,
-      },
-      year2: {
-        total: year2.total,
-        present: year2.present,
-        absent: year2.absent,
-        absentees: year2.absentees,
-      },
-      year3: {
-        total: year3.total,
-        present: year3.present,
-        absent: year3.absent,
-        absentees: year3.absentees,
-      },
-      year4: {
-        total: year4.total,
-        present: year4.present,
-        absent: year4.absent,
-        absentees: year4.absentees,
-      },
-      facultyId: req.userId,
-      department: req.userDepartment,
-      class: classData,
-    };
-
-    const attendance = new Attendance(attendanceData);
+    const attendanceData = req.body;
+    // You can access the facultyId here
+    const facultyIdFromToken = req.userId;
+    const attendance = new Attendance({
+      ...attendanceData,
+      facultyId: facultyIdFromToken, // Assuming you want to save this to the DB
+    });
     await attendance.save();
     res.status(201).send({ message: "Attendance added successfully" });
   } catch (error) {
