@@ -6,6 +6,7 @@ const Faculty = require("../models/Faculty");
 const router = express.Router();
 const SECRET_KEY = process.env.SECRET_KEY || "yourSecretKeyHere"; // Consider removing the default key in production
 
+const TotalStudents = require("../models/TotalStudents");
 // Middlewares
 
 function authenticate(req, res, next) {
@@ -26,6 +27,42 @@ function authenticate(req, res, next) {
     next();
   });
 }
+
+router.post("/add-total-students", authenticateSuperAdmin, async (req, res) => {
+  try {
+    const { department, year1, year2, year3, year4 } = req.body;
+    const totalStudents = new TotalStudents({
+      department,
+      year1,
+      year2,
+      year3,
+      year4,
+    });
+    await totalStudents.save();
+    res.status(201).send({
+      message:
+        "Total students for each year added successfully for the department",
+    });
+  } catch (error) {
+    res.status(500).send({ error: "Failed to add total students" });
+  }
+});
+
+// Route to view total students for each year based on department
+router.get("/view-total-students", async (req, res) => {
+  try {
+    const department = req.query.department;
+    const totalStudents = await TotalStudents.findOne({ department });
+    if (!totalStudents) {
+      return res
+        .status(404)
+        .send({ message: "No data found for the specified department" });
+    }
+    res.status(200).send(totalStudents);
+  } catch (error) {
+    res.status(500).send({ error: "Failed to fetch total students" });
+  }
+});
 
 // API Endpoints
 router.post("/attendance", authenticate, async (req, res) => {
@@ -100,9 +137,17 @@ router.post("/login", async (req, res) => {
   }
 });
 
-function isAuthorizedToRegisterAsHead(email, department, secretCode) {
-  const HOD_SECRET_CODE = "fosslab"; // You can change this to any code you prefer.
-  return secretCode === HOD_SECRET_CODE;
+function authenticateSuperAdmin(req, res, next) {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(403).send({ error: "No token provided" });
+
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err)
+      return res.status(401).send({ error: "Failed to authenticate token" });
+    if (decoded.role !== "superadmin")
+      return res.status(403).send({ error: "Access denied" });
+    next();
+  });
 }
 
 router.post("/register", async (req, res) => {
