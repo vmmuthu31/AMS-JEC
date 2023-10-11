@@ -47,6 +47,41 @@ router.post("/add-total-students", authenticateSuperAdmin, async (req, res) => {
     res.status(500).send({ error: "Failed to add total students" });
   }
 });
+router.put("/attendance/:id", authenticate, async (req, res) => {
+  try {
+    const attendanceId = req.params.id; // Get attendance record ID from the URL
+    const updates = req.body; // Extract updated data from the request body
+
+    const attendanceRecord = await Attendance.findById(attendanceId);
+    if (!attendanceRecord) {
+      return res.status(404).send({ error: "Attendance record not found" });
+    }
+
+    // Check if the logged-in user has the right to update this record
+    // For example, if only the faculty who created the record or an admin can update it
+    if (req.userId !== attendanceRecord.facultyId && req.userRole !== "admin") {
+      return res
+        .status(403)
+        .send({ error: "You don't have permission to update this record" });
+    }
+
+    // Update the record
+    Object.keys(updates).forEach(
+      (key) => (attendanceRecord[key] = updates[key])
+    );
+    await attendanceRecord.save();
+
+    res
+      .status(200)
+      .send({
+        message: "Attendance updated successfully",
+        data: attendanceRecord,
+      });
+  } catch (error) {
+    console.error("Error updating attendance record:", error);
+    res.status(500).send({ error: "Failed to update attendance" });
+  }
+});
 
 // Route to view total students for each year based on department
 router.get("/view-total-students", async (req, res) => {
