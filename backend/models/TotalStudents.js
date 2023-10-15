@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const YearlyStudentSchema = new mongoose.Schema({
-  class: {
+const ClassSchema = new mongoose.Schema({
+  className: {
     type: String,
     required: true,
   },
@@ -11,15 +11,19 @@ const YearlyStudentSchema = new mongoose.Schema({
   },
 });
 
+const YearSchema = new mongoose.Schema({
+  classes: [ClassSchema], // Allow multiple classes within a year
+});
+
 const totalStudentsSchema = new mongoose.Schema({
   department: {
     type: String,
     required: true,
   },
-  year1: YearlyStudentSchema,
-  year2: YearlyStudentSchema,
-  year3: YearlyStudentSchema,
-  year4: YearlyStudentSchema,
+  year1: YearSchema,
+  year2: YearSchema,
+  year3: YearSchema,
+  year4: YearSchema,
 });
 
 module.exports = mongoose.model("TotalStudents", totalStudentsSchema);
