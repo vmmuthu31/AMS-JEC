@@ -7,6 +7,7 @@ const AttendanceSchema = new mongoose.Schema({
   class: String,
   total: Number,
   present: Number,
+  regular: Number,
   absent: Number,
   absentees: String,
   facultyId: String,
