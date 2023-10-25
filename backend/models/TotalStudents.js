@@ -9,6 +9,10 @@ const ClassSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  regular: {
+    type: Number,
+    required: true,
+  },
 });
 
 const YearSchema = new mongoose.Schema({
