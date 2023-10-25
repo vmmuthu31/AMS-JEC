@@ -47,6 +47,41 @@ router.post("/add-total-students", authenticateSuperAdmin, async (req, res) => {
     res.status(500).send({ error: "Failed to add total students" });
   }
 });
+
+router.put(
+  "/update-total-students/:department",
+  authenticateSuperAdmin,
+  async (req, res) => {
+    try {
+      const { department } = req.params;
+      const { year1, year2, year3, year4 } = req.body;
+
+      // Find the existing record by department.
+      const totalStudents = await TotalStudents.findOne({ department });
+
+      if (!totalStudents) {
+        return res
+          .status(404)
+          .send({ message: "Total students data not found" });
+      }
+
+      // Update the years' data.
+      totalStudents.year1 = year1;
+      totalStudents.year2 = year2;
+      totalStudents.year3 = year3;
+      totalStudents.year4 = year4;
+
+      await totalStudents.save();
+
+      res
+        .status(200)
+        .send({ message: "Total students data updated successfully" });
+    } catch (error) {
+      res.status(500).send({ error: "Failed to update total students data" });
+    }
+  }
+);
+
 router.put("/attendance/:id", authenticate, async (req, res) => {
   try {
     const attendanceId = req.params.id; // Get attendance record ID from the URL
@@ -71,12 +106,10 @@ router.put("/attendance/:id", authenticate, async (req, res) => {
     );
     await attendanceRecord.save();
 
-    res
-      .status(200)
-      .send({
-        message: "Attendance updated successfully",
-        data: attendanceRecord,
-      });
+    res.status(200).send({
+      message: "Attendance updated successfully",
+      data: attendanceRecord,
+    });
   } catch (error) {
     console.error("Error updating attendance record:", error);
     res.status(500).send({ error: "Failed to update attendance" });
