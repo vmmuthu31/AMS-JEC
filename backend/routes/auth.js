@@ -55,10 +55,7 @@ router.put(
     try {
       const { department } = req.params;
       const { year1, year2, year3, year4 } = req.body;
-
-      // Find the existing record by department.
       const totalStudents = await TotalStudents.findOne({ department });
-
       if (!totalStudents) {
         return res
           .status(404)
